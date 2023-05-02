@@ -1,0 +1,8 @@
+.lastevents {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    background-color: rgba(128, 128, 128, 0.845);
+    border-radius: 5px;
+    max-width: 500px;
+}

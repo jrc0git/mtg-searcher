@@ -1,0 +1,18 @@
+img.modalImage {
+    width: 300px;
+  height: auto;
+  z-index: 10000;
+  position: relative; 
+  left: -50px;
+  bottom: 40px;
+  border-radius:15px;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.47);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.47);  
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.47);
+}
+
+img.icons {
+    width: 20px;
+    height: auto;
+    display: inline;
+}

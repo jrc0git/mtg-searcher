@@ -1,0 +1,68 @@
+header {
+    background-color: #423F88;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 85px;
+    padding: 5px 50px;
+}
+
+header .logo {
+    cursor: pointer;
+}
+
+header .aboutButton {
+    margin-left: auto;
+    transition: all 0.2s;
+}
+
+header .aboutButton:hover {
+    transform: scale(1.2);
+}
+
+header .aboutButton button {
+    font-size: larger;
+    color: white;
+}
+
+header .aboutButton button:hover {
+    color: rgb(171, 166, 200);
+}
+
+
+header .logo img {
+    height: 50px;
+    width: auto;
+    transition: all 0.2s;
+}
+
+header .logo img:hover {
+    transform: scale(1.2);
+}
+
+header .navigation {
+    margin-left: 50px;
+}
+
+header .navigation li {
+    display: inline-block;
+    padding: 0 15px;
+    transition: all 0.2s;
+
+}
+
+header .navigation li:hover {
+    transform: scale(1.2);
+
+}
+
+header .navigation a {
+    font-size: larger;
+    color: white;
+    text-decoration: none;
+}
+
+header .navigation a:hover {
+    color: rgb(171, 166, 200);
+}
+
