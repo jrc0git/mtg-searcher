@@ -14,7 +14,7 @@ img.listImage {
 }
 
 img.listImage:hover{
-    transform: scale(2);
+    transform: scale(1.7);
     -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.47);
     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.47);  
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.47);

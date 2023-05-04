@@ -8,7 +8,8 @@
 }
 
 .top .intro {
-  font-size: larger;
+  font-size: large;
+  font-style: italic;
 }
 
 .top input {
@@ -69,6 +70,17 @@
     margin: 100px;
 }
 
+.search {
+  display: table-row;
+}
+
+.search .loading {
+  display: inline-block;
+  position: absolute;
+  top: 44%;
+  padding-left: 20px;
+}
+
 .fade-enter{
     opacity: 0;
  }
@@ -86,19 +98,7 @@
     transition: opacity 500ms;
  }
 
- .loader {
-    display: inline-block;
-    font-size: 6px;
-    width: 1em;
-    height: 1em;
-    border-radius: 50%;
-    position: relative;
-    left: 30px;
-    bottom: 5px;
-    text-indent: -9999em;
-    animation: mulShdSpin 1.1s infinite ease;
-    transform: translateZ(0);
-  }
+ 
   @keyframes mulShdSpin {
     0%,
     100% {
@@ -124,5 +124,30 @@
     }
     87.5% {
       box-shadow: 0em -2.6em 0em 0em rgba(255,255,255, 0.2), 1.8em -1.8em 0 0em rgba(255,255,255, 0.2), 2.5em 0em 0 0em rgba(255,255,255, 0.2), 1.75em 1.75em 0 0em rgba(255,255,255, 0.2), 0em 2.5em 0 0em rgba(255,255,255, 0.2), -1.8em 1.8em 0 0em rgba(255,255,255, 0.5), -2.6em 0em 0 0em rgba(255,255,255, 0.7), -1.8em -1.8em 0 0em #ffffff;
+    }
+  }
+
+
+  .dot-carousel {
+    position: relative;
+    left: -9999px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #9880ff;
+    color: #9880ff;
+    box-shadow: 9984px 0 0 0 #9880ff, 9999px 0 0 0 #9880ff, 10014px 0 0 0 #9880ff;
+    animation: dot-carousel 1.5s infinite linear;
+  }
+  
+  @keyframes dot-carousel {
+    0% {
+      box-shadow: 9984px 0 0 -1px #9880ff, 9999px 0 0 1px #9880ff, 10014px 0 0 -1px #9880ff;
+    }
+    50% {
+      box-shadow: 10014px 0 0 -1px #9880ff, 9984px 0 0 -1px #9880ff, 9999px 0 0 1px #9880ff;
+    }
+    100% {
+      box-shadow: 9999px 0 0 1px #9880ff, 10014px 0 0 -1px #9880ff, 9984px 0 0 -1px #9880ff;
     }
   }

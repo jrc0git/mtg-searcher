@@ -39,14 +39,18 @@ export function Home () {
 
       <div className='top'>
         <div className='intro'>
-          Looking for a specific card?
+          Welcome! This is a <strong>magic card searcher</strong>, you can click on a card to reveal info like price and
+          valid formats.
         </div>
         <div className='search'>
           <input
             type='text' placeholder='Looking for something?'
             onChange={(input) => setSearchInput(input.target.value)}
           />
-          {isSearching && <span className='loader' />}
+          <div className='loading'>
+            {isSearching && <div className='dot-carousel' />}
+          </div>
+
         </div>
       </div>
 
