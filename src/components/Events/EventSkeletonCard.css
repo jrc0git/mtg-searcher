@@ -1,0 +1,18 @@
+.event-skeleton-card{
+    display: flex;
+    width: 100%;
+    height: max-content;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #423F88;
+    justify-content: center;
+    align-items: center;
+}
+
+.event-skeleton-card .skeleton-info {
+    margin-left: 1rem;
+}
+
+.event-skeleton-card .skeleton-name{
+    flex: 1;
+}

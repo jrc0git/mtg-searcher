@@ -1,38 +1,18 @@
 import './Events.css'
-import { useEffect, useState } from 'react'
-import { getEventsByMeta } from '../../logic/events'
-import { EventsTable } from './EventsTable'
+import { EventsWrapperCard } from './EventsWrapperCard'
+import { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export function Events () {
   const formats = ['modern', 'standard', 'pioneer']
-  const [events, setEvents] = useState([])
-  useEffect(() => {
-    Promise.all(formats.map(meta => getEventsByMeta(meta)
-      .then(res => res.json())
-      .then(json => json.data)
-    ))
-      .then((array) => {
-        const newEvents = []
-        array.forEach((format) => {
-          newEvents.push(format)
-        })
-        setEvents(newEvents)
-      })
-  }, [])
   return (
-    <main className='mainEvents'>
-      {
-        events.length === formats.length
-          ? events.map((format) => {
-            return (
-
-              <EventsTable events={format} key={format} />
-
-            )
-          })
-          : null
-      }
-    </main>
+    <SkeletonTheme baseColor='#313131' highlightColor='#525252'>
+      <main className='events-main'>
+        {formats.map(format => (
+          <EventsWrapperCard format={format} key={format} />
+        ))}
+      </main>
+    </SkeletonTheme>
 
   )
 }

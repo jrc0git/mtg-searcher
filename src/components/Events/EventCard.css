@@ -1,0 +1,22 @@
+.event-card{
+    display: flex;
+    width: 100%;
+    height: max-content;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #423F88;
+    transition: all 0.2s ease;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.event-card:hover{
+    transform: scale(1.05);
+}
+
+.event-card .info {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+}

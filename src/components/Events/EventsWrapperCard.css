@@ -1,0 +1,13 @@
+main.events-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 500px;
+    height: 500px;
+    border-radius: 5px;
+    padding: 10px 12px;
+    background-color: #6e6ad0;
+    text-align: center;
+    justify-content: center;
+    color: white;
+}
