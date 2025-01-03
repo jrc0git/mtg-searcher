@@ -4,3 +4,4 @@ by [crookedneighbor](https://github.com/crookedneighbor/scryfall-client). Search
 I also use my mtg-api to scrap tournament and deck data from MTGTop8.
 
 ![](https://raw.githubusercontent.com/jrc0git/mtg-searcher/refs/heads/main/sample.png)
+![](https://raw.githubusercontent.com/jrc0git/mtg-searcher/refs/heads/main/sample_2.png)
