@@ -4,10 +4,13 @@ import scryfall from 'scryfall-client'
 import { transformText } from '../logic/apiCalls'
 import { CSSTransition } from 'react-transition-group'
 import { Modal } from './Modal'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export function Card ({ name }) {
   const [loadInfo, setLoadInfo] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [isImageLoading, setIsImageLoading] = useState(true)
   const [card, setCard] = useState({
     cardName: name,
     image: '',
@@ -50,41 +53,75 @@ export function Card ({ name }) {
           id: res.id,
           cita: res.flavor_text
         })
-        console.log(res)
       })
   }, [loadInfo])
 
   return (
     <>
-      <img className='listImage' src={card.image} onClick={() => setShowModal(true)} />
+      {isImageLoading && (
+        <div className="card-skeleton">
+          <SkeletonTheme baseColor="#202020" highlightColor="#444">
+            <Skeleton height={209} width={150} borderRadius={12} />
+          </SkeletonTheme>
+        </div>
+      )}
+      <img 
+        className='listImage' 
+        src={card.image} 
+        onClick={() => setShowModal(true)}
+        onLoad={() => setIsImageLoading(false)}
+        style={{ display: isImageLoading ? 'none' : 'block' }}
+      />
       <CSSTransition
         timeout={600}
         classNames='modal'
         in={showModal}
       >
         <Modal visible={showModal} handleModalClose={handleModalClose} card={card}>
+          <div className="modal-details">
+            <h2 className="modal-title">{card.cardName}</h2>
+            <div className="modal-text">{card.text}</div>
+            {card.cita && (
+              <div className="modal-flavor-text">{card.cita}</div>
+            )}
+            <div className="modal-info-section">
+              <div className="modal-price-section">
+                <h3>Price Information</h3>
+                <div className='price-cards'>
+                  {card.price.normal && (
+                    <div className='price-card'>
+                      <span className='price-label'>Regular</span>
+                      <span className='price-value'>{card.price.normal}€</span>
+                    </div>
+                  )}
+                  {card.price.foil && (
+                    <div className='price-card foil'>
+                      <span className='price-label'>Foil</span>
+                      <span className='price-value'>{card.price.foil}€</span>
+                    </div>
+                  )}
+                </div>
+              </div>
 
-          <div className='grow flex flex-col text-left justify-start items-center text-black break-words w-70 max-w-xl p-5 '>
-            <div className='mb-2 text-2xl italic'>
-              {card.cardName}
-            </div>
-            <div className='whitespace-pre-line shadow-black bg-slate-300 bg-opacity-25 rounded p-6 mt-5'>
-              {transformText(card.text)}
-            </div>
-            <p className='text-center mt-5 italic'>{card.cita}</p>
-            <br />
-            <br />
-            <p><strong>Price</strong>: {card.price.normal ? `${card.price.normal}€` : null} {card.price.foil ? ` ${card.price.foil}€(foil) ` : null} </p>
-            <div>
-              <strong>Formats</strong>:&nbsp;
-
-              {card.formats.standard ? <div className='text-green-400 inline'>Standard</div> : <div className='text-rose-700 inline'>Standard</div>}&nbsp;
-              {card.formats.modern ? <div className='text-green-400 inline'>Modern</div> : <div className='text-rose-700 inline'>Modern</div>}&nbsp;
-              {card.formats.legacy ? <div className='text-green-400 inline'>Legacy</div> : <div className='text-rose-700 inline'>Legacy</div>}
-
+              <div className='modal-formats-section'>
+                <h3>Format Legality</h3>
+                <div className='format-cards'>
+                  <div className={`format-card ${card.formats.standard ? 'legal' : 'illegal'}`}>
+                    <span className='format-name'>Standard</span>
+                    <span className='format-status'>{card.formats.standard ? 'Legal' : 'Not Legal'}</span>
+                  </div>
+                  <div className={`format-card ${card.formats.modern ? 'legal' : 'illegal'}`}>
+                    <span className='format-name'>Modern</span>
+                    <span className='format-status'>{card.formats.modern ? 'Legal' : 'Not Legal'}</span>
+                  </div>
+                  <div className={`format-card ${card.formats.legacy ? 'legal' : 'illegal'}`}>
+                    <span className='format-name'>Legacy</span>
+                    <span className='format-status'>{card.formats.legacy ? 'Legal' : 'Not Legal'}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
         </Modal>
       </CSSTransition>
     </>

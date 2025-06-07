@@ -1,24 +1,40 @@
 import './Nav.css'
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, useLocation } from 'react-router-dom'
 
 export function Nav () {
+  const location = useLocation()
+  
+  const isActive = (path) => {
+    return location.pathname === path ? 'active' : ''
+  }
+
   return (
     <>
       <header>
         <div className='logo'>
-          <Link to='home'><img src='./src/assets/logo.png' alt='Logo' /></Link>
+          <Link to='/home'>
+            <img src='./src/assets/logo.png' alt='Logo' />
+          </Link>
         </div>
         <nav>
           <ul className='navigation'>
-            <li><a href=''>Meta</a></li>
-            <li><Link to='events'>Events</Link></li>
+            <li>
+              <Link to='/meta' className={isActive('/meta')}>
+                Meta
+              </Link>
+            </li>
+            <li>
+              <Link to='/events' className={isActive('/events')}>
+                Events
+              </Link>
+            </li>
           </ul>
         </nav>
-        <a href='' className='aboutButton'><button>About</button></a>
+        <div className='aboutButton'>
+          <button>About</button>
+        </div>
       </header>
-
       <Outlet />
-
     </>
   )
 }

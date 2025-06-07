@@ -16,7 +16,6 @@ export function Home () {
     }
     const newTimerId = setTimeout(() => {
       if (searchInput !== '') {
-        console.log('api call')
         searchAutocomplete(searchInput)
           .then(response => setCards(response))
           .then(setIsSearching(false))
@@ -25,7 +24,6 @@ export function Home () {
         setIsSearching(false)
       }
     }, 1000)
-    console.log('setted timer id')
     setTimerId(newTimerId)
   }, [searchInput])
 
@@ -36,7 +34,6 @@ export function Home () {
 
   return (
     <>
-
       <div className='top'>
         <div className='intro'>
           Welcome! This is a <strong>magic card searcher</strong>, you can click on a card to reveal info like price and
@@ -44,13 +41,13 @@ export function Home () {
         </div>
         <div className='search'>
           <input
-            type='text' placeholder='Looking for something?'
+            type='text' 
+            placeholder='Looking for something?'
             onChange={(input) => setSearchInput(input.target.value)}
           />
           <div className='loading'>
-            {isSearching && <div className='dot-carousel' />}
+            {isSearching && <div className='loading-spinner' />}
           </div>
-
         </div>
       </div>
 
@@ -60,24 +57,18 @@ export function Home () {
           key={cards}
           addEndListener={(node, done) => node.addEventListener('transitionend', done, false)}
         >
-
           <div className='results'>
-            {
-                          cards !== null
-                            ? cards.map((card) => {
-                              return (
-
-                                <Card name={card} key={card} />
-
-                              )
-                            })
-                            : null
-                        }
-
+            {cards !== null
+              ? cards.map((card) => {
+                return (
+                  <Card name={card} key={card} />
+                )
+              })
+              : null
+            }
           </div>
         </CSSTransition>
       </SwitchTransition>
-
     </>
   )
 }

@@ -3,66 +3,110 @@ header {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    height: 85px;
-    padding: 5px 50px;
+    height: 80px;
+    padding: 0 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 header .logo {
     cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+header .logo img {
+    height: 45px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+header .logo:hover img {
+    transform: scale(1.05);
+}
+
+header .navigation {
+    margin-left: 3rem;
+    display: flex;
+    gap: 1rem;
+}
+
+header .navigation li {
+    list-style: none;
+}
+
+header .navigation a {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+header .navigation a:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+header .navigation a.active {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+header .navigation a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 3px;
+    background-color: #9880ff;
+    border-radius: 2px;
 }
 
 header .aboutButton {
     margin-left: auto;
-    transition: all 0.2s;
-}
-
-header .aboutButton:hover {
-    transform: scale(1.2);
 }
 
 header .aboutButton button {
-    font-size: larger;
+    font-size: 1.1rem;
     color: white;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 header .aboutButton button:hover {
-    color: rgb(171, 166, 200);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
 }
 
+@media (max-width: 768px) {
+    header {
+        padding: 0 1rem;
+    }
 
-header .logo img {
-    height: 50px;
-    width: auto;
-    transition: all 0.2s;
-}
+    header .navigation {
+        margin-left: 1.5rem;
+    }
 
-header .logo img:hover {
-    transform: scale(1.2);
-}
+    header .navigation a {
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
+    }
 
-header .navigation {
-    margin-left: 50px;
-}
-
-header .navigation li {
-    display: inline-block;
-    padding: 0 15px;
-    transition: all 0.2s;
-
-}
-
-header .navigation li:hover {
-    transform: scale(1.2);
-
-}
-
-header .navigation a {
-    font-size: larger;
-    color: white;
-    text-decoration: none;
-}
-
-header .navigation a:hover {
-    color: rgb(171, 166, 200);
+    header .aboutButton button {
+        padding: 0.4rem 1.2rem;
+        font-size: 1rem;
+    }
 }
 
