@@ -89,16 +89,26 @@ export function Card ({ name }) {
                 <h3>Price Information</h3>
                 <div className='price-cards'>
                   {card.price.normal && (
-                    <div className='price-card'>
+                    <a 
+                      href={`https://www.cardmarket.com/es/Magic/Products/Search?searchString=${encodeURIComponent(card.cardName)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className='price-card'
+                    >
                       <span className='price-label'>Regular</span>
                       <span className='price-value'>{card.price.normal}€</span>
-                    </div>
+                    </a>
                   )}
                   {card.price.foil && (
-                    <div className='price-card foil'>
+                    <a 
+                      href={`https://www.cardmarket.com/es/Magic/Products/Search?searchString=${encodeURIComponent(card.cardName)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className='price-card foil'
+                    >
                       <span className='price-label'>Foil</span>
                       <span className='price-value'>{card.price.foil}€</span>
-                    </div>
+                    </a>
                   )}
                 </div>
               </div>
