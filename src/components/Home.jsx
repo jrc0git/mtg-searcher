@@ -1,8 +1,10 @@
 import './Home.css'
 import { useState, useEffect } from 'react'
-import { searchAutocomplete } from '../logic/apiCalls'
+import { searchCards } from '../logic/apiCalls'
 import { SwitchTransition, CSSTransition } from 'react-transition-group'
 import { Card } from './Card'
+
+const MAX_RESULTS = 30
 
 export function Home () {
   const [searchInput, setSearchInput] = useState('')
@@ -16,14 +18,14 @@ export function Home () {
     }
     const newTimerId = setTimeout(() => {
       if (searchInput !== '') {
-        searchAutocomplete(searchInput)
-          .then(response => setCards(response))
-          .then(setIsSearching(false))
+        searchCards(searchInput)
+          .then(response => setCards(response.slice(0, MAX_RESULTS)))
+          .then(() => setIsSearching(false))
       } else {
         setCards(null)
         setIsSearching(false)
       }
-    }, 1000)
+    }, 500)
     setTimerId(newTimerId)
   }, [searchInput])
 
@@ -41,7 +43,7 @@ export function Home () {
         </div>
         <div className='search'>
           <input
-            type='text' 
+            type='text'
             placeholder='Looking for something?'
             onChange={(input) => setSearchInput(input.target.value)}
           />
@@ -54,16 +56,16 @@ export function Home () {
       <SwitchTransition>
         <CSSTransition
           classNames='fade'
-          key={cards}
+          key={cards?.length || 0}
           addEndListener={(node, done) => node.addEventListener('transitionend', done, false)}
         >
           <div className='results'>
             {cards !== null
-              ? cards.map((card) => {
-                return (
-                  <Card name={card} key={card} />
-                )
-              })
+              ? cards.map((cardData) => {
+                  return (
+                    <Card cardData={cardData} key={cardData.id} />
+                  )
+                })
               : null
             }
           </div>

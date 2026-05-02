@@ -1,42 +1,48 @@
 import './Card.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import scryfall from 'scryfall-client'
-import { transformText } from '../logic/apiCalls'
 import { CSSTransition } from 'react-transition-group'
 import { Modal } from './Modal'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-export function Card ({ name }) {
-  const [loadInfo, setLoadInfo] = useState(false)
+function imageExists(url) {
+  if (!url) return false
+  const link = new Image()
+  link.src = url
+  return link.complete && (link.naturalHeight > 0 || link.naturalWidth > 0)
+}
+
+export function Card ({ cardData }) {
   const [showModal, setShowModal] = useState(false)
-  const [isImageLoading, setIsImageLoading] = useState(true)
-  const [card, setCard] = useState({
-    cardName: name,
-    image: '',
+  const [isImageLoading, setIsImageLoading] = useState(() => !imageExists(cardData.getImage('small')))
+  const [hasError, setHasError] = useState(false)
+  const [card, setCard] = useState(() => ({
+    cardName: cardData.name,
+    image: cardData.getImage('normal') || '',
     price: { normal: '', foil: '' },
     formats: { standard: '', modern: '', legacy: '' },
     artist: '',
     set: '',
     text: '',
-    id: '',
+    id: cardData.id,
     cita: ''
-  })
+  }))
+
   const handleModalClose = () => {
     setShowModal(false)
   }
 
   useEffect(() => {
-    if (showModal) setLoadInfo(true)
-  }, [showModal])
+    if (!showModal) return
 
-  useEffect(() => {
-    scryfall.get('cards/named', {
-      exact: name
-    })
-      .then((res) => {
+    const loadCard = async () => {
+      try {
+        const res = await scryfall.get('cards/named', {
+          exact: cardData.name
+        })
         setCard({
-          cardName: name,
+          cardName: cardData.name,
           image: res.getImage('normal'),
           price: {
             normal: res.getPrice('eur'),
@@ -53,8 +59,24 @@ export function Card ({ name }) {
           id: res.id,
           cita: res.flavor_text
         })
-      })
-  }, [loadInfo])
+      } catch (err) {
+        console.error('Error loading card:', err)
+      }
+    }
+
+    loadCard()
+  }, [showModal, cardData.name])
+
+  const handleImageLoad = useCallback(() => {
+    setIsImageLoading(false)
+  }, [])
+
+  const handleImageError = useCallback(() => {
+    setIsImageLoading(false)
+    setHasError(true)
+  }, [])
+
+  const imageUrl = cardData.getImage('small') || ''
 
   return (
     <>
@@ -65,13 +87,17 @@ export function Card ({ name }) {
           </SkeletonTheme>
         </div>
       )}
-      <img 
-        className='listImage' 
-        src={card.image} 
-        onClick={() => setShowModal(true)}
-        onLoad={() => setIsImageLoading(false)}
-        style={{ display: isImageLoading ? 'none' : 'block' }}
-      />
+      {!hasError && (
+        <img
+          className='listImage'
+          src={imageUrl}
+          alt={cardData.name}
+          onClick={() => setShowModal(true)}
+          onLoad={handleImageLoad}
+          onError={handleImageError}
+          style={{ display: isImageLoading ? 'none' : 'block' }}
+        />
+      )}
       <CSSTransition
         timeout={600}
         classNames='modal'
@@ -89,7 +115,7 @@ export function Card ({ name }) {
                 <h3>Price Information</h3>
                 <div className='price-cards'>
                   {card.price.normal && (
-                    <a 
+                    <a
                       href={`https://www.cardmarket.com/es/Magic/Products/Search?searchString=${encodeURIComponent(card.cardName)}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -100,7 +126,7 @@ export function Card ({ name }) {
                     </a>
                   )}
                   {card.price.foil && (
-                    <a 
+                    <a
                       href={`https://www.cardmarket.com/es/Magic/Products/Search?searchString=${encodeURIComponent(card.cardName)}`}
                       target="_blank"
                       rel="noopener noreferrer"

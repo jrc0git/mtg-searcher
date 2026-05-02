@@ -6,6 +6,15 @@ export const searchAutocomplete = (cardName) => {
   return scryfall.autocomplete(cardName)
 }
 
+export const searchCards = (cardName) => {
+  return scryfall.get('cards/search', {
+    q: cardName,
+    order: 'name',
+    dir: 'asc',
+    unique: 'prints'
+  })
+}
+
 export const imageByName = (name) => {
   return scryfall.get('cards/named', {
     fuzzy: name
